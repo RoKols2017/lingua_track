@@ -1,0 +1,51 @@
+word,translation,example,comment,level
+Bias,смещение,Bias means the model favors certain answers.,ИИ — тоже иногда предвзят.,intermediate
+Unsupervised Learning,обучение без учителя,Unsupervised learning finds patterns without labels.,"Без учителя, зато интересно.",intermediate
+Few-shot Learning,обучение с малым числом примеров,Few-shot learning works with just a few examples.,Покажи один раз — и модель попробует повторить.,advanced
+Attention Mechanism,механизм внимания,Attention helps models focus on important words.,ИИ тоже любит слушать только важное.,advanced
+Hyperparameter,гиперпараметр,Tuning hyperparameters improves model results.,Перекручивать — осторожно!,advanced
+Multimodal Model,мультимодальная модель,Multimodal models work with text and images.,"Видит, слышит и читает.",advanced
+Regularization,регуляризация,Regularization helps avoid overfitting.,Держит модель в форме.,advanced
+Conversational AI,разговорный ИИ,Conversational AI chats with users.,Иногда говорит умнее людей.,intermediate
+Fine-tuning,донастройка,Fine-tuning adapts the model to a specific task.,Как довести чай до идеальной температуры.,advanced
+Knowledge Graph,граф знаний,Knowledge graphs organize facts.,Справочник для ИИ.,advanced
+Artificial Intelligence,искусственный интеллект,Artificial intelligence is changing the world.,Без него ваш холодильник не будет умнее кота.,beginner
+Embedding,векторное представление,Embeddings turn words into numbers.,Когда слова становятся цифрами.,advanced
+Overfitting,переобучение,Overfitting means the model memorizes too much.,"Знает ответы, но не вопросы.",advanced
+GPT,ГПТ,"GPT can write poems, emails, or jokes.","Не отвечает на звонки, но пишет хорошо.",beginner
+Sequence-to-Sequence,последовательность в последовательность,Seq2seq models translate languages.,"Привет, переводчик!",intermediate
+Sampling,семплирование,Sampling selects outputs randomly.,"Кому выпадет шутка, а кому — научный текст.",intermediate
+Tokenization,токенизация,Tokenization splits text into smaller pieces.,"Разделяй и властвуй, как говорится!",intermediate
+Transformer,трансформер,Transformers make translation apps smarter.,"Нет, автоботов не будет.",intermediate
+Zero-shot Learning,обучение без примеров,Zero-shot learning needs no examples to solve tasks.,Сделай это впервые — без инструкций!,advanced
+Neural Network,нейронная сеть,Neural networks mimic the human brain.,Главное — не запутаться в связях!,intermediate
+Natural Language Processing,обработка естественного языка,NLP helps computers understand people.,"Компьютер, который почти понимает шутки.",beginner
+Underfitting,недообучение,Underfitting means the model learns too little.,Когда модель пропустила все лекции.,advanced
+Pretraining,предобучение,Pretraining gives the model basic knowledge.,"Модель сначала учится всему подряд, как школьник летом.",intermediate
+Text Classification,классификация текста,Text classification sorts emails as spam or not.,Удобно для фильтрации спама.,intermediate
+Reinforcement Learning,обучение с подкреплением,Reinforcement learning teaches robots to play games.,"Как дрессировка, только для компьютера.",advanced
+Deep Learning,глубокое обучение,Deep learning is used in self-driving cars.,"Даже ИИ не знает, почему это работает.",intermediate
+Training Data,обучающие данные,Models learn from training data.,Где модель подчерпнула всю свою мудрость.,beginner
+Optimizer,оптимизатор,Optimizers help models improve faster.,Прокачка ИИ: быстро и без боли.,advanced
+Tokenizer,токенизатор,Tokenizers split sentences into tokens.,"Дробит текст на кусочки, как шоколадку.",beginner
+Text Generation,генерация текста,Text generation creates new stories or answers.,Может написать роман за минуту.,intermediate
+Perplexity,озадаченность,Perplexity measures model confusion.,Когда ИИ немного не в себе.,advanced
+Beam Search,поиск по лучам,Beam search finds the best answer among many.,"ИИ не идет наугад, выбирает путь.",advanced
+Self-Attention,самовнимание,Self-attention lets models focus on different words.,Когда ИИ занят только собой.,advanced
+BERT,БЕРТ,BERT helps Google understand your search.,Любит смотреть в обе стороны.,advanced
+Gradient Descent,градиентный спуск,Gradient descent finds the best solution step by step.,"Медленно, но верно к успеху.",advanced
+Large Language Model,большая языковая модель,Large language models write texts like this one.,"Знает больше анекдотов, чем ваш дядя.",intermediate
+Batch Size,размер пакета,Batch size is the number of samples processed at once.,Вопрос: много — это сколько?,intermediate
+Language Model,языковая модель,Language models complete your sentences.,"Как Т9, только умнее.",beginner
+Prompt Engineering,инжиниринг промптов,Prompt engineering helps get better results from LLMs.,Волшебная настройка для магии.,advanced
+Machine Learning,машинное обучение,Machine learning helps computers recognize cats in photos.,Теперь компьютер тоже может отличить кота от собаки.,beginner
+Parameter,параметр,Parameters define how a model behaves.,Как специи для борща.,beginner
+Epoch,эпоха,An epoch is one round of training.,Один день из жизни нейросети.,beginner
+Loss Function,функция потерь,The loss function shows how wrong the model is.,"Модель расстраивается, если ошибается.",advanced
+Activation Function,функция активации,Activation functions add non-linearity to models.,Добавляет жизни нейронам.,advanced
+Data Augmentation,аугментация данных,Data augmentation creates more data for training.,"Когда данных мало, но очень хочется.",intermediate
+Inference,вывод,Inference is when the model answers your question.,Момент истины для ИИ.,intermediate
+Prompt,промпт,Type a prompt to get a response from the chatbot.,Магическое слово для ИИ.,beginner
+Transfer Learning,трансферное обучение,Transfer learning lets a model use old knowledge.,Не нужно учиться заново!,intermediate
+Supervised Learning,обучение с учителем,Supervised learning uses labeled data.,Учитель всегда проверяет домашку.,beginner
+Backpropagation,обратное распространение ошибки,Backpropagation teaches the model from its mistakes.,Ошибся — попробуй снова!,advanced

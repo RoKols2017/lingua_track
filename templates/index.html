@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    {% if user.is_authenticated %}
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold mb-4 text-gray-800">Добро пожаловать, {{ user.username }}!</h1>
+            <p class="text-lg text-gray-600 mb-8">Используй карточки для изучения слов, отслеживай прогресс и учись с удовольствием.</p>
+        </div>
+        
+        <!-- Основные действия -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Основные действия</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <a href="{% url 'card_list' %}" class="px-4 py-3 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition text-center font-medium">
+                    📚 Мои карточки
+                </a>
+                <a href="{% url 'user_progress' %}" class="px-4 py-3 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition text-center font-medium">
+                    📊 Мой прогресс
+                </a>
+                <a href="{% url 'card_test' %}" class="px-4 py-3 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition text-center font-medium">
+                    🧪 Тестирование
+                </a>
+                <a href="{% url 'review_mode' %}" class="px-4 py-3 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition text-center font-medium">
+                    🔄 Повторение
+                </a>
+            </div>
+        </div>
+        
+        <!-- Быстрые действия -->
+        <div class="bg-white rounded-xl shadow-md p-6">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Быстрые действия</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                <a href="{% url 'card_add' %}" class="px-4 py-3 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition text-center font-medium">
+                    ➕ Добавить карточку
+                </a>
+                <a href="{% url 'card_import' %}" class="px-4 py-3 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition text-center font-medium">
+                    📥 Импорт из CSV
+                </a>
+                <a href="{% url 'card_export' %}" class="px-4 py-3 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition text-center font-medium">
+                    📤 Экспорт в CSV
+                </a>
+            </div>
+        </div>
+    {% else %}
+        <div class="flex flex-col items-center justify-center min-h-[60vh] gap-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold text-blue-700 mb-4">LinguaTrack</h1>
+                <p class="text-xl text-gray-600 mb-8 max-w-2xl">
+                    Система для изучения иностранных слов с интервальным повторением, 
+                    озвучкой и интеграцией с Telegram-ботом
+                </p>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-md p-8 w-full max-w-md">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Начать обучение</h2>
+                <div class="space-y-4">
+                    <a href="{% url 'register' %}" class="w-full px-6 py-3 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition text-center font-medium block">
+                        Регистрация
+                    </a>
+                    <a href="{% url 'login' %}" class="w-full px-6 py-3 bg-gray-400/80 text-white rounded shadow hover:bg-gray-500 transition text-center font-medium block">
+                        Вход
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Преимущества -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <div class="text-center">
+                    <div class="text-3xl mb-2">📚</div>
+                    <h3 class="font-semibold text-gray-800 mb-2">Карточки слов</h3>
+                    <p class="text-gray-600">Создавайте и управляйте карточками для изучения иностранных слов</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl mb-2">🔄</div>
+                    <h3 class="font-semibold text-gray-800 mb-2">Интервальное повторение</h3>
+                    <p class="text-gray-600">Научно обоснованный метод запоминания по алгоритму SM-2</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl mb-2">🤖</div>
+                    <h3 class="font-semibold text-gray-800 mb-2">Telegram-бот</h3>
+                    <p class="text-gray-600">Учитесь на ходу с помощью удобного бота в Telegram</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %} 

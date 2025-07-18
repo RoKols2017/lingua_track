@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Профиль пользователя</h2>
+    
+    <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+        <div class="space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-2">
+                <span class="font-semibold text-gray-700 min-w-[140px]">Имя пользователя:</span>
+                <span class="text-gray-800">{{ user.username }}</span>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row sm:items-center gap-2">
+                <span class="font-semibold text-gray-700 min-w-[140px]">Email:</span>
+                <span class="text-gray-800">{{ user.email }}</span>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row sm:items-start gap-2">
+                <span class="font-semibold text-gray-700 min-w-[140px]">Telegram:</span>
+                <div class="flex-1">
+                    {% if status == 'ok' %}
+                        <span class="text-green-600 font-medium">✅ Привязан (ID: {{ user.telegram_id }})</span>
+                    {% else %}
+                        <span class="text-red-600 font-medium">❌ Не привязан</span>
+                        <form method="post" action="{% url 'generate_telegram_link' %}" class="mt-3">
+                            {% csrf_token %}
+                            <button type="submit" class="px-4 py-2 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition">
+                                Привязать Telegram
+                            </button>
+                        </form>
+                        
+                        {% if telegram_link %}
+                            <div class="mt-4 p-4 bg-gray-50 rounded-lg border">
+                                <div class="space-y-3">
+                                    <div>
+                                        <span class="font-semibold text-gray-700">1. Откройте Telegram и перейдите по ссылке:</span>
+                                        <a href="{{ telegram_link }}" target="_blank" class="block mt-1 text-blue-500 hover:text-blue-700 break-all">
+                                            {{ telegram_link }}
+                                        </a>
+                                    </div>
+                                    
+                                    <div>
+                                        <span class="font-semibold text-gray-700">2. Или отсканируйте QR-код:</span>
+                                        {% if telegram_qr %}
+                                            <div class="mt-2 flex justify-center">
+                                                <img src="data:image/png;base64,{{ telegram_qr }}" alt="QR для Telegram" class="rounded-lg shadow-md"/>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div>
+                                        <span class="font-semibold text-gray-700">3. Если бот не привязывает автоматически:</span>
+                                        <div class="mt-1 text-sm text-gray-600">
+                                            Скопируйте токен и отправьте боту команду:
+                                            <code class="block mt-1 bg-gray-200 px-3 py-2 rounded font-mono text-sm">/start {{ telegram_token }}</code>
+                                        </div>
+                                        <div class="mt-2 text-xs text-gray-500">
+                                            Токен одноразовый, после привязки потребуется сгенерировать новый для повторной привязки.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Кнопки действий -->
+    <div class="bg-white rounded-xl shadow-md p-6">
+        <h3 class="text-lg font-semibold mb-4 text-gray-800">Быстрые действия</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <a href="{% url 'card_list' %}" class="px-4 py-2 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition text-center">
+                Мои карточки
+            </a>
+            <a href="{% url 'user_progress' %}" class="px-4 py-2 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition text-center">
+                Мой прогресс
+            </a>
+            <a href="{% url 'card_test' %}" class="px-4 py-2 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition text-center">
+                Тестирование
+            </a>
+            <a href="{% url 'review_mode' %}" class="px-4 py-2 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition text-center">
+                Повторение
+            </a>
+        </div>
+        
+        <div class="mt-4 pt-4 border-t border-gray-200">
+            <a href="{% url 'logout' %}" class="px-4 py-2 bg-red-400/80 text-white rounded shadow hover:bg-red-500 transition">
+                Выйти
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

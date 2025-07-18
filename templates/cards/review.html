@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="bg-white rounded-xl shadow-md p-6">
+        <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Повторение карточки</h2>
+        
+        <!-- Карточка -->
+        <div class="text-center mb-6">
+            <div class="text-2xl font-bold text-gray-800 mb-4 flex items-center justify-center gap-3">
+                {% if show_word %}
+                    {{ card.word }}
+                    <button onclick="playTTS({{ card.id }})" title="Озвучить" class="text-blue-400 hover:text-blue-600 focus:outline-none transition">
+                        <span class="text-2xl">▶️</span>
+                    </button>
+                {% else %}
+                    {{ card.translation }}
+                    <button onclick="playTTS({{ card.id }}, 'translation')" title="Озвучить" class="text-blue-400 hover:text-blue-600 focus:outline-none transition">
+                        <span class="text-2xl">▶️</span>
+                    </button>
+                {% endif %}
+            </div>
+            
+            <div class="text-lg text-gray-600 mb-3">
+                {% if show_word %}{{ card.translation }}{% else %}{{ card.word }}{% endif %}
+            </div>
+            
+            {% if card.example %}
+                <div class="text-sm text-gray-500 mb-2 italic">"{{ card.example }}"</div>
+            {% endif %}
+            
+            {% if card.comment %}
+                <div class="text-xs text-gray-400 mb-3">{{ card.comment }}</div>
+            {% endif %}
+            
+            <div class="inline-block px-3 py-1 bg-gray-100 rounded text-sm text-gray-600">
+                {{ card.get_level_display }}
+            </div>
+        </div>
+        
+        <!-- Кнопка смены режима -->
+        <div class="text-center mb-6">
+            <a href="{% url 'review_mode' %}" class="px-4 py-2 bg-gray-400/80 text-white rounded shadow hover:bg-gray-500 transition font-medium">
+                🔄 Сменить режим
+            </a>
+        </div>
+        
+        <!-- Оценка -->
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+            <div class="text-center">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Оцените, насколько хорошо вы знаете это слово:</h3>
+                <div class="grid grid-cols-6 gap-2">
+                    {% for i in "012345" %}
+                        <button name="quality" value="{{ i }}" type="submit" 
+                                class="px-4 py-3 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition font-bold text-lg">
+                            {{ i }}
+                        </button>
+                    {% endfor %}
+                </div>
+                <div class="text-sm text-gray-500 mt-3">
+                    <span class="font-medium">0</span> — не знал, 
+                    <span class="font-medium">5</span> — идеально
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function playTTS(cardId, field) {
+    const audio = new Audio();
+    let url = `/cards/${cardId}/tts/?field=` + (field || 'word');
+    audio.src = url;
+    
+    audio.addEventListener('error', function(e) {
+        console.error('Ошибка воспроизведения аудио:', e);
+        showNotification('Ошибка озвучки. Попробуйте позже.', 'error');
+    });
+    
+    audio.addEventListener('loadstart', function() {
+        console.log('Загрузка аудио...');
+    });
+    
+    audio.addEventListener('canplay', function() {
+        console.log('Аудио готово к воспроизведению');
+    });
+    
+    audio.play().catch(function(error) {
+        console.error('Ошибка запуска аудио:', error);
+        showNotification('Не удалось воспроизвести аудио.', 'error');
+    });
+}
+
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 px-4 py-3 rounded shadow-lg z-50 max-w-sm ${
+        type === 'error' ? 'bg-red-500 text-white' : 'bg-blue-500 text-white'
+    }`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+</script>
+{% endblock %} 

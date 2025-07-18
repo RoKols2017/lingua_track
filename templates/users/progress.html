@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="bg-white rounded-xl shadow-md p-4 sm:p-6">
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-800 text-center mb-4 sm:mb-6">📊 Мой прогресс</h2>
+        
+        <!-- Статистика -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4 mb-6 sm:mb-8">
+            <div class="bg-blue-50 rounded-lg p-3 sm:p-4 text-center">
+                <div class="text-lg sm:text-2xl mb-1 sm:mb-2">📚</div>
+                <div class="text-base sm:text-lg font-semibold text-gray-800">{{ total }}</div>
+                <div class="text-xs sm:text-sm text-gray-600">Всего</div>
+            </div>
+            
+            <div class="bg-green-50 rounded-lg p-3 sm:p-4 text-center">
+                <div class="text-lg sm:text-2xl mb-1 sm:mb-2">✅</div>
+                <div class="text-base sm:text-lg font-semibold text-gray-800">{{ learned }}</div>
+                <div class="text-xs sm:text-sm text-gray-600">Выучено</div>
+            </div>
+            
+            <div class="bg-red-50 rounded-lg p-3 sm:p-4 text-center">
+                <div class="text-lg sm:text-2xl mb-1 sm:mb-2">❌</div>
+                <div class="text-base sm:text-lg font-semibold text-gray-800">{{ errors }}</div>
+                <div class="text-xs sm:text-sm text-gray-600">Ошибок</div>
+            </div>
+            
+            <div class="bg-purple-50 rounded-lg p-3 sm:p-4 text-center">
+                <div class="text-lg sm:text-2xl mb-1 sm:mb-2">🔄</div>
+                <div class="text-base sm:text-lg font-semibold text-gray-800">{{ repetitions }}</div>
+                <div class="text-xs sm:text-sm text-gray-600">Повторений</div>
+            </div>
+            
+            <div class="bg-orange-50 rounded-lg p-3 sm:p-4 text-center col-span-2 sm:col-span-1">
+                <div class="text-lg sm:text-2xl mb-1 sm:mb-2">📈</div>
+                <div class="text-base sm:text-lg font-semibold text-gray-800">{{ percentage|floatformat:1 }}%</div>
+                <div class="text-xs sm:text-sm text-gray-600">Процент</div>
+            </div>
+        </div>
+        
+        <!-- Прогресс-бар -->
+        <div class="mb-6 sm:mb-8">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-xs sm:text-sm font-medium text-gray-700">Прогресс изучения</span>
+                <span class="text-xs sm:text-sm text-gray-500">{{ learned }} из {{ total }}</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2 sm:h-3">
+                <div class="bg-blue-400 h-2 sm:h-3 rounded-full transition-all duration-300" 
+                     style="width: {% if total > 0 %}{{ percentage }}{% else %}0{% endif %}%"></div>
+            </div>
+        </div>
+        
+        <!-- Кнопки действий -->
+        <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center pt-4 sm:pt-6 border-t border-gray-200">
+            <a href="{% url 'profile' %}" class="px-4 sm:px-6 py-2 sm:py-3 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition font-medium text-center text-sm sm:text-base">
+                👤 Профиль
+            </a>
+            <a href="{% url 'card_list' %}" class="px-4 sm:px-6 py-2 sm:py-3 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition font-medium text-center text-sm sm:text-base">
+                📚 Карточки
+            </a>
+            <a href="{% url 'card_test' %}" class="px-4 sm:px-6 py-2 sm:py-3 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition font-medium text-center text-sm sm:text-base">
+                🧪 Тест
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

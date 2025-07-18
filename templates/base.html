@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinguaTrack</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Навигация -->
+    <nav class="bg-white/90 shadow-sm backdrop-blur sticky top-0 z-10 border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex flex-col sm:flex-row gap-4 items-center justify-between py-4">
+                <!-- Логотип -->
+                <div class="flex items-center gap-3">
+                    <div class="text-2xl">📚</div>
+                    <div class="font-bold text-xl tracking-wide text-gray-800">LinguaTrack</div>
+                </div>
+                
+                <!-- Навигационные ссылки -->
+                <div class="flex flex-wrap gap-4 items-center">
+                    {% if user.is_authenticated %}
+                        <a href="/" class="text-gray-700 hover:text-blue-500 transition-colors font-medium">Главная</a>
+                        <a href="{% url 'card_list' %}" class="text-gray-700 hover:text-blue-500 transition-colors font-medium">Карточки</a>
+                        <a href="/users/profile/" class="text-gray-700 hover:text-blue-500 transition-colors font-medium">Профиль</a>
+                        <a href="/users/logout/" class="text-gray-700 hover:text-red-500 transition-colors font-medium">Выйти</a>
+                    {% else %}
+                        <a href="/users/login/" class="text-gray-700 hover:text-blue-500 transition-colors font-medium">Вход</a>
+                        <a href="/users/register/" class="text-gray-700 hover:text-blue-500 transition-colors font-medium">Регистрация</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Основной контент -->
+    <main class="py-6 px-4">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Футер -->
+    <footer class="bg-white border-t border-gray-200 mt-12">
+        <div class="max-w-6xl mx-auto px-4 py-6">
+            <div class="text-center text-gray-600 text-sm">
+                <p>&copy; 2025 LinguaTrack. Система изучения иностранных слов с интервальным повторением.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 

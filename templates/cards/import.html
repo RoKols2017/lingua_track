@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="flex flex-col items-center justify-center min-h-[60vh] gap-6">
+  <div class="bg-white rounded-xl shadow-md p-6 w-full max-w-md flex flex-col items-center gap-4">
+    <h2 class="text-2xl font-bold text-blue-700 text-center">Импорт карточек из CSV</h2>
+    <form method="post" enctype="multipart/form-data" class="flex flex-col gap-4 w-full">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="px-4 py-2 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition">Импортировать</button>
+    </form>
+    <div class="bg-gray-50 rounded p-3 text-xs text-gray-600 w-full">
+      <b>Формат CSV:</b><br>
+      <code>word,translation,example,comment,level</code><br>
+      <code>cat,кот,The cat is on the roof.,,beginner</code><br>
+      <code>dog,собака,My dog is friendly.,,beginner</code><br>
+      <code>apple,яблоко,An apple a day keeps the doctor away.,,intermediate</code><br>
+      <br>
+      <b>level</b>: beginner, intermediate, advanced (по умолчанию beginner)<br>
+      Файл должен быть в кодировке UTF-8.
+    </div>
+    <a href="{% url 'card_list' %}" class="text-blue-500 hover:underline">Назад к карточкам</a>
+  </div>
+</div>
+{% endblock %} 

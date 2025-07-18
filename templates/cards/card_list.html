@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Мои карточки</h2>
+    
+    <!-- Фильтр -->
+    <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+        <form method="get" class="flex flex-col sm:flex-row gap-3 items-center">
+            <label for="level" class="text-gray-700 font-medium min-w-[80px]">Уровень:</label>
+            <select name="level" id="level" class="px-3 py-2 border border-gray-300 rounded shadow-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200 flex-1">
+                <option value="">Все уровни</option>
+                <option value="beginner" {% if request.GET.level == 'beginner' %}selected{% endif %}>Начальный</option>
+                <option value="intermediate" {% if request.GET.level == 'intermediate' %}selected{% endif %}>Средний</option>
+                <option value="advanced" {% if request.GET.level == 'advanced' %}selected{% endif %}>Продвинутый</option>
+            </select>
+            <button type="submit" class="px-4 py-2 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition font-medium">
+                Фильтровать
+            </button>
+        </form>
+    </div>
+    
+    <!-- Кнопки действий -->
+    <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+        <h3 class="text-lg font-semibold mb-4 text-gray-800">Действия с карточками</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+            <a href="{% url 'card_add' %}" class="px-4 py-2 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition text-center font-medium">
+                ➕ Добавить
+            </a>
+            <a href="{% url 'card_import' %}" class="px-4 py-2 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition text-center font-medium">
+                📥 Импорт
+            </a>
+            <a href="{% url 'card_export' %}" class="px-4 py-2 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition text-center font-medium">
+                📤 Экспорт
+            </a>
+            <a href="{% url 'card_test' %}" class="px-4 py-2 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition text-center font-medium">
+                🧪 Тест
+            </a>
+            <a href="{% url 'review_mode' %}" class="px-4 py-2 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition text-center font-medium">
+                🔄 Повторение
+            </a>
+        </div>
+    </div>
+    
+    <!-- Список карточек -->
+    <div class="space-y-4">
+        {% for card in cards %}
+        <div class="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="flex-1">
+                    <div class="flex items-center gap-3 mb-2">
+                        <h3 class="font-semibold text-lg text-gray-800">{{ card.word }}</h3>
+                        <button onclick="playTTS({{ card.id }})" title="Озвучить" class="text-blue-400 hover:text-blue-600 focus:outline-none transition">
+                            <span class="text-xl">▶️</span>
+                        </button>
+                    </div>
+                    <div class="text-gray-600 mb-1">{{ card.translation }}</div>
+                    <div class="flex items-center gap-4 text-sm text-gray-500">
+                        <span class="px-2 py-1 bg-gray-100 rounded">{{ card.get_level_display }}</span>
+                        {% if card.schedule %}
+                            <span class="px-2 py-1 bg-blue-100 rounded text-blue-700">
+                                📅 {{ card.schedule.next_review|date:"d.m.Y" }}
+                            </span>
+                        {% endif %}
+                        {% if card.example %}
+                            <span class="italic">"{{ card.example|truncatechars:50 }}"</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <a href="{% url 'card_edit' card.pk %}" class="px-3 py-2 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition" title="Редактировать">
+                        ✏️
+                    </a>
+                    <a href="{% url 'card_delete' card.pk %}" class="px-3 py-2 bg-red-400/80 text-white rounded shadow hover:bg-red-500 transition" title="Удалить">
+                        🗑️
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="bg-white rounded-xl shadow-md p-8 text-center">
+            <div class="text-4xl mb-4">📚</div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Нет карточек</h3>
+            <p class="text-gray-600 mb-4">Создайте свою первую карточку для изучения слов</p>
+            <a href="{% url 'card_add' %}" class="px-6 py-3 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition font-medium">
+                ➕ Добавить карточку
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+function playTTS(cardId) {
+    const audio = new Audio();
+    audio.src = `/cards/${cardId}/tts/?field=word`;
+    
+    audio.addEventListener('error', function(e) {
+        console.error('Ошибка воспроизведения аудио:', e);
+        showNotification('Ошибка озвучки. Попробуйте позже.', 'error');
+    });
+    
+    audio.addEventListener('loadstart', function() {
+        console.log('Загрузка аудио...');
+    });
+    
+    audio.addEventListener('canplay', function() {
+        console.log('Аудио готово к воспроизведению');
+    });
+    
+    audio.play().catch(function(error) {
+        console.error('Ошибка запуска аудио:', error);
+        showNotification('Не удалось воспроизвести аудио.', 'error');
+    });
+}
+
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 px-4 py-3 rounded shadow-lg z-50 max-w-sm ${
+        type === 'error' ? 'bg-red-500 text-white' : 'bg-blue-500 text-white'
+    }`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+</script>
+{% endblock %} 

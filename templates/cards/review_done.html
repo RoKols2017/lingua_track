@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="flex flex-col items-center justify-center min-h-[60vh] gap-6">
+  <div class="bg-white rounded-xl shadow-md p-6 w-full max-w-md flex flex-col items-center gap-4">
+    <h2 class="text-2xl font-bold text-green-600 text-center">Все повторения на сегодня завершены!</h2>
+    <p class="text-gray-600 text-center">Поздравляем! Вы повторили все карточки, запланированные на сегодня.</p>
+    <a href="{% url 'card_list' %}" class="px-4 py-2 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition">К списку карточек</a>
+  </div>
+</div>
+{% endblock %} 

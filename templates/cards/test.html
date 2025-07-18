@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="flex flex-col items-center justify-center min-h-[60vh] gap-6">
+  <div class="bg-white rounded-xl shadow-md p-6 w-full max-w-md flex flex-col items-center gap-4">
+    <h2 class="text-2xl font-bold text-blue-700 text-center mb-4">📝 Тестирование</h2>
+    <div class="w-full text-center mb-2">
+      <div class="text-lg font-semibold text-gray-800 mb-2 flex items-center gap-2 justify-center">
+        {{ card.word }}
+        <button onclick="playTTS({{ card.id }})" title="Озвучить" class="text-blue-400 hover:text-blue-600 focus:outline-none"><span class="inline-block text-blue-400 text-lg align-middle">&#9654;</span></button>
+      </div>
+      {% if card.example %}
+        <div class="text-sm text-gray-400 mb-2">Пример: {{ card.example }}</div>
+      {% endif %}
+      {% if card.comment %}
+        <div class="text-xs text-gray-300 mb-2">Комментарий: {{ card.comment }}</div>
+      {% endif %}
+      <div class="text-xs text-gray-400 mb-2">Уровень: {{ card.get_level_display }}</div>
+    </div>
+    {% if feedback %}
+      <div class="w-full text-center mb-2">
+        <div class="px-4 py-2 rounded shadow font-bold {% if correct %}bg-green-400/80 text-white{% else %}bg-red-400/80 text-white{% endif %}">{{ feedback }}</div>
+      </div>
+    {% endif %}
+    <form method="post" class="flex flex-col gap-2 w-full items-center">
+      {% csrf_token %}
+      <input type="hidden" name="idx" value="{{ idx }}">
+      <div class="flex flex-col gap-2 w-full">
+        {% for opt in options %}
+          <button name="answer" value="{{ opt }}" type="submit" class="w-full px-4 py-2 bg-blue-400/80 text-white rounded shadow hover:bg-blue-500 transition font-bold">{{ opt }}</button>
+        {% endfor %}
+      </div>
+    </form>
+    <div class="text-xs text-gray-400 mt-2">Вопрос {{ idx|add:1 }} из {{ total }}</div>
+    <a href="{% url 'card_list' %}" class="px-4 py-2 bg-gray-200 rounded shadow hover:bg-gray-300 transition mt-2">Выйти из теста</a>
+  </div>
+</div>
+<script>
+function playTTS(cardId) {
+    const audio = new Audio();
+    audio.src = `/cards/${cardId}/tts/?field=word`;
+    audio.play().catch(function(error) {
+        alert('Ошибка озвучки. Попробуйте позже.');
+    });
+}
+</script>
+{% endblock %} 
