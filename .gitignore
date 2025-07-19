@@ -51,6 +51,12 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
+# Test coverage reports
+htmlcov/
+.coverage
+coverage.xml
+.pytest_cache/
+
 # Translations
 *.mo
 *.pot
